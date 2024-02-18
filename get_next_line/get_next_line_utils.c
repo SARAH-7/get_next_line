@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:55:26 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/18 17:53:40 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/18 21:31:19 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,23 @@ size_t	ft_strlen(const char *s)
 
 char	*ft_strchr(const char *s, int c)
 {
-	int	i;
+	int		i;
+	char	*p = NULL;
+	int		j;
 
+	j = 0;
 	i = 0;
-	while (*s)
+	while (s[i])
 	{
-		if (*s == (unsigned char)c)
-			return (((char *)(s)));
+		if (s[i] == (unsigned char)c)
+		{
+			while (j < i)
+			{
+				p[j] = s[j];
+				j++;
+			}
+			return ((char *)(p));
+		}
 		s++;
 		i++;
 	}

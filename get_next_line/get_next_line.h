@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:55:28 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/18 16:34:35 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/18 21:07:24 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <string.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 20
 # endif
 
 char	*get_next_line(int fd);
