@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:21:13 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/18 20:59:34 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/19 17:06:06 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	int		count;
 
 	count = 0;
-	fd = open("hi.txt", O_RDONLY);
+	fd = open("ex.txt", O_RDONLY);
 	if (fd == -1)
 		return (-1);
 	while ((line = get_next_line(fd)) != NULL)

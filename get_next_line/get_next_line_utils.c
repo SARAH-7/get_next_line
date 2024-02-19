@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:55:26 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/18 21:31:19 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/19 17:05:49 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,47 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	len;
+
+	len = 0;
+	if (dstsize == 0)
+		return (strlen(src));
+	while (*src && len < dstsize - 1)
+	{
+		*dst++ = *src++;
+		len++;
+	}
+	*dst = '\0';
+	return (len + strlen(src));
+}
+
 char	*ft_strchr(const char *s, int c)
 {
 	int		i;
-	char	*p = NULL;
+	char	*t;
 	int		j;
 
-	j = 0;
+	t = NULL;
 	i = 0;
-	while (s[i])
+	j = 0;
+	while (*s)
 	{
-		if (s[i] == (unsigned char)c)
+		if (*s == (unsigned char)c)
 		{
+			t = (char *)malloc(i + 1);
+			if (t == NULL)
+				return (NULL);
+			s -= i;
 			while (j < i)
 			{
-				p[j] = s[j];
+				t[j] = s[j];
 				j++;
 			}
-			return ((char *)(p));
+			if (i == 0)
+				t = ft_strdup("\n");
+			return (t);
 		}
 		s++;
 		i++;
