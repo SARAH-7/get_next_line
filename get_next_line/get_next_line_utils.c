@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:55:26 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/21 20:44:30 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/22 19:52:20 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,12 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i])
 		i++;
 	return (i);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	len;
-
-	len = 0;
-	if (dstsize == 0)
-		return (strlen(src));
-	while (*src && len < dstsize - 1)
-	{
-		*dst++ = *src++;
-		len++;
-	}
-	*dst = '\0';
-	return (len + strlen(src));
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -69,6 +55,8 @@ char	*ft_strchr(const char *s, int c)
 	char	*t;
 	int		j;
 
+	if (!s)
+		return (NULL);
 	t = NULL;
 	i = 0;
 	j = 0;
@@ -76,7 +64,7 @@ char	*ft_strchr(const char *s, int c)
 	{
 		if (*s == (unsigned char)c)
 		{
-			t = (char *)malloc(i + 1);
+			t = (char *)malloc(i + 2);
 			if (t == NULL)
 				return (NULL);
 			s -= i;
@@ -85,6 +73,7 @@ char	*ft_strchr(const char *s, int c)
 				t[j] = s[j];
 				j++;
 			}
+			t[j] = '\0';
 			return (t);
 		}
 		s++;
@@ -141,7 +130,7 @@ char	*assign_line(char const *s1, char const *s2)
 		return (NULL);
 	str = (char *) malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
 	if (!str)
-		return (NULL);
+		return (free((void *)s1), free((void *)s2), NULL);
 	ft_bzero(str, (ft_strlen(s1) + ft_strlen(s2)) + 1);
 	while (s1[a] && s1[a] != '\0')
 	{
@@ -163,6 +152,8 @@ char	*ft_strdup(const char *s1)
 	char	*s;
 	char	*dst;
 
+	if (!s1)
+		return (NULL);
 	s = malloc ((ft_strlen(s1) + 1) * sizeof(char));
 	if (!s)
 		return (NULL);
