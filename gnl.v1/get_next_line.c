@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:54:44 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/25 16:31:37 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/25 18:52:35 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,17 @@ char	*get_next_line(int fd)
 	temp = NULL;
 	if (fd < 0 || BUFFER_SIZE > INT_MAX)
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1 * sizeof(char));
+	buffer = malloc(BUFFER_SIZE + (size_t)1);
 	if (!buffer)
 		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	// if (bytes_read <= 0)
-	// {
-	// 	free(buffer);
-	// 	free(remain);
-	// 	return (NULL);
-	// }
+	if (bytes_read <= 0)
+	{
+		free(temp);
+		free(buffer);
+		free(remain);
+		return (NULL);
+	}
 	while (bytes_read > 0 || remain != NULL)
 	{
 		buffer[bytes_read] = '\0';
@@ -91,9 +92,8 @@ char	*get_next_line(int fd)
 	{
 		free(temp);
 		temp = NULL;
-		
 	}
 	free(buffer);
-	buffer= NULL;
+	buffer = NULL;
 	return (line);
 }
