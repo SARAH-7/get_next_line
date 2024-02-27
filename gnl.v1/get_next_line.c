@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:54:44 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/27 19:44:51 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/27 20:04:12 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ char	*get_next_line(int fd)
 	if (bytes_read < 0)
 	{
 		free(buffer);
-		if (remain)
-			free_variable(&remain);
-		return (NULL);
+		return (free_variable(&remain), NULL);
 	}
 	while (bytes_read > 0 || remain != NULL)
 	{
@@ -98,15 +96,11 @@ char	*get_next_line(int fd)
 		temp = ft_strchr(line, '\n');
 		if (temp)
 			break ;
-		ft_bzero(buffer, BUFFER_SIZE + 1);
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
-			break ;
 	}
 	if (temp)
 		free_variable(&temp);
 	if (line && line[0] == '\0')
 		free_variable(&line);
-	free_variable(&buffer);
-	return (line);
+	return (free_variable(&buffer), line);
 }
