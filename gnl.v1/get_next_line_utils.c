@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:55:26 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/27 17:37:10 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/27 20:52:53 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ char	*ft_strchr(const char *s, int c)
 		s++;
 		i++;
 	}
-	// if ((unsigned char)c == 0 && *s == 0)
-	// 	return ((char *)(s - i));
 	return (NULL);
 }
 
@@ -84,7 +82,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str = (char *) malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
 	if (!str)
 		return (NULL);
-	ft_bzero(str, (ft_strlen(s1) + ft_strlen(s2)) + 1);
 	while (s1[a] && s1[a] != '\0')
 	{
 		str[a] = s1[a];
@@ -158,7 +155,7 @@ char	*ft_remain_lines(const char *s, int c)
 		if (*s == (unsigned char)c)
 		{
 			s++;
-			return (((char *)s));
+			return (((char *)s++));
 		}
 		s++;
 	}
