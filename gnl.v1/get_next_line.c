@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:54:44 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/27 19:30:38 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/27 19:44:51 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,27 @@ void	free_variable(char **variable)
 {
 	free(*variable);
 	*variable = NULL;
+}
+
+void	remain_check(char **remain, char **line)
+{
+	if (*remain)
+	{
+		*line = ft_strdup(*remain);
+		free_variable(remain);
+	}
+}
+
+void	line_check(char **line, char **buffer, char *temp)
+{
+	if (*line == NULL)
+		*line = ft_strdup(*buffer);
+	else
+	{
+		temp = *line;
+		*line = assign_line(temp, *buffer);
+		free_variable(&temp);
+	}
 }
 
 void	get_the_next_line(int bytes_read, char **line,
@@ -28,21 +49,10 @@ void	get_the_next_line(int bytes_read, char **line,
 	temp1 = NULL;
 	while (bytes_read > 0 || *remain != NULL)
 	{
-		if (*remain)
-		{
-			*line = ft_strdup(*remain);
-			free_variable(remain);
-			if (bytes_read <= 0 && *line == NULL)
-				break ;
-		}
-		if (*line == NULL)
-			*line = ft_strdup(*buffer);
-		else
-		{
-			temp = *line;
-			*line = assign_line(temp, *buffer);
-			free_variable(&temp);
-		}
+		remain_check(remain, line);
+		if (bytes_read <= 0 && *line == NULL)
+			break ;
+		line_check(line, buffer, temp);
 		temp1 = ft_strchr(*line, '\n');
 		if (temp1)
 		{
