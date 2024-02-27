@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:55:26 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/26 11:45:50 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/27 17:37:10 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ size_t	ft_strlen(const char *s)
 	if (!s)
 		return (0);
 	i = 0;
-	while (s[i])
+	while (s[i] && s[i] != '\0')
 		i++;
 	return (i);
 }
