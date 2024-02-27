@@ -6,11 +6,17 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:54:44 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/27 18:10:24 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/27 19:30:38 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	free_variable(char **variable)
+{
+	free(*variable);
+	*variable = NULL;
+}
 
 void	get_the_next_line(int bytes_read, char **line,
 	char **buffer, char **remain)
@@ -25,8 +31,7 @@ void	get_the_next_line(int bytes_read, char **line,
 		if (*remain)
 		{
 			*line = ft_strdup(*remain);
-			free(*remain);
-			*remain = NULL;
+			free_variable(remain);
 			if (bytes_read <= 0 && *line == NULL)
 				break ;
 		}
@@ -36,8 +41,7 @@ void	get_the_next_line(int bytes_read, char **line,
 		{
 			temp = *line;
 			*line = assign_line(temp, *buffer);
-			free(temp);
-			temp = NULL;
+			free_variable(&temp);
 		}
 		temp1 = ft_strchr(*line, '\n');
 		if (temp1)
@@ -45,10 +49,8 @@ void	get_the_next_line(int bytes_read, char **line,
 			*remain = ft_strdup(ft_remain_lines(*line, '\n'));
 			temp = *line;
 			*line = ft_strchr(temp, '\n');
-			free(temp);
-			temp = NULL;
-			free(temp1);
-			temp1 = NULL;
+			free_variable(&temp);
+			free_variable(&temp1);
 		}
 		break ;
 	}
@@ -76,10 +78,7 @@ char	*get_next_line(int fd)
 	{
 		free(buffer);
 		if (remain)
-		{
-			free(remain);
-			remain = NULL;
-		}
+			free_variable(&remain);
 		return (NULL);
 	}
 	while (bytes_read > 0 || remain != NULL)
@@ -95,16 +94,9 @@ char	*get_next_line(int fd)
 			break ;
 	}
 	if (temp)
-	{
-		free(temp);
-		temp = NULL;
-	}
-	if(line && line[0] == '\0')
-	{
-		free(line);
-		line = NULL;
-	}
-	free(buffer);
-	buffer = NULL;
+		free_variable(&temp);
+	if (line && line[0] == '\0')
+		free_variable(&line);
+	free_variable(&buffer);
 	return (line);
 }
