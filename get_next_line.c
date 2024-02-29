@@ -6,7 +6,7 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:54:44 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/28 18:32:54 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:14:25 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_variable(char **variable)
 	*variable = NULL;
 }
 
-void	line_check(char **line, char **buffer, char *temp)
+void	line_append(char **line, char **buffer, char *temp)
 {
 	if (*line == NULL)
 		*line = ft_strdup(*buffer);
@@ -43,12 +43,12 @@ void	get_the_next_line(int bytes_read, char **line,
 	}
 	if (bytes_read > 0 || *line)
 	{
-		line_check(line, buffer, temp);
+		line_append(line, buffer, temp);
 		if (ft_strchr(*line, '\n'))
 		{
 			*remain = ft_strdup(ft_strchr(*line, '\n'));
 			temp = *line;
-			*line = ft_get_line(*line, '\n');
+			*line = ft_get_line(temp, '\n');
 			free_variable(&temp);
 		}
 	}
@@ -64,13 +64,13 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (fd < 0 || (BUFFER_SIZE >= INT_MAX))
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = malloc((size_t)(BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read < 0)
 		return (free_variable(&buffer), free_variable(&remain), NULL);
-	while (bytes_read > 0 || remain != NULL)
+	while (bytes_read > 0 || remain)
 	{
 		buffer[bytes_read] = '\0';
 		get_the_next_line(bytes_read, &line, &buffer, &remain);

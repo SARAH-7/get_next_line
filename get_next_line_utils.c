@@ -6,24 +6,30 @@
 /*   By: sbakhit <sbakhit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 13:55:26 by sbakhit           #+#    #+#             */
-/*   Updated: 2024/02/28 18:24:04 by sbakhit          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:46:58 by sbakhit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
 
+size_t	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
 char	*ft_strdup(const char *s1)
 {
 	char	*str;
 	char	*result;
-	size_t	len;
 
-	len = 0;
-	while (s1[len])
-		len++;
 	if (!s1)
 		return (NULL);
-	str = malloc ((len + 1) * sizeof(char));
+	str = malloc ((ft_strlen(s1) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	result = str;
@@ -36,26 +42,20 @@ char	*ft_strdup(const char *s1)
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char		*str;
-	size_t		len_s1;
-	size_t		len_s2;
+	char		*result;
 
-	len_s1 = 0;
-	len_s2 = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	while (s1[len_s1])
-		len_s1++;
-	while (s2[len_s2])
-		len_s2++;
-	str = (char *)malloc(len_s1 + len_s2 + 1);
+	str = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
 	if (!str)
 		return (NULL);
+	result = str;
 	while (*s1)
 		*str++ = *s1++;
 	while (*s2)
 		*str++ = *s2++;
 	*str = '\0';
-	return (str - (len_s1 + len_s2));
+	return (result);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -84,7 +84,7 @@ char	*ft_get_line(const char *s, int c)
 		s++;
 	if (*s == (unsigned char)c)
 	{
-		t = (char *)malloc((s - p) + 2);
+		t = malloc((s - p) + 2);
 		if (!t)
 			return (NULL);
 		while (j <= s - p)
