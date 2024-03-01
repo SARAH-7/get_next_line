@@ -64,7 +64,7 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (fd < 0 || (BUFFER_SIZE >= INT_MAX))
 		return (NULL);
-	buffer = malloc((size_t)(BUFFER_SIZE + 1));
+	buffer = malloc((size_t)(BUFFER_SIZE) + 1);
 	if (!buffer)
 		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
